@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Heart Disease Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-600 p-4 text-white flex justify-between">
+        <h1 class="text-2xl font-bold">Admin Dashboard</h1>
+        <a href="{% url 'logout' %}" class="text-white bg-red-500 px-4 py-2 rounded-lg">Logout</a>
+    </nav>
+    
+    <div class="container mx-auto py-8 px-4">
+        <h2 class="text-3xl font-bold text-gray-800 mb-6">Welcome, Admin</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Patient List</h3>
+                <p>View and manage patient records.</p>
+                <a href="https://patient.info/heart-health/heart-disease" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 inline-block">View Patients</a>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Doctor List</h3>
+                <p>View and manage doctor records.</p>
+                <a href="https://www.practo.com/mumbai/cardiologist" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 inline-block">View Doctors</a>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Prediction Results</h3>
+                <p>View AI-based heart disease predictions.</p>
+                <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10378171/" class="mt-4 bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-700 inline-block">View Predictions</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

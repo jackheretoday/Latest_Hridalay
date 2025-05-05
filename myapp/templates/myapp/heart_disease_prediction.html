@@ -1,0 +1,297 @@
+{% extends 'myapp/base.html' %} {% load static %} {% block content %}
+<div class="container mx-auto px-4 py-8 max-w-5xl">
+  <!-- Page Header with Gradient -->
+  <div class="bg-gradient-to-r from-red-600 via-purple-500 to-blue-600 rounded-lg shadow-lg p-6 mb-8">
+    <div class="flex flex-col md:flex-row justify-between items-center">
+      <div class="flex items-center">
+        <svg class="w-10 h-10 mr-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+        </svg>
+        <h1 class="text-3xl font-bold text-white">Heart Disease Prediction</h1>
+      </div>
+      <div class="mt-4 md:mt-0">
+        <a href="{% url 'myapp:patient_dashboard' %}" class="px-4 py-2 bg-black bg-opacity-30 rounded-lg text-white hover:bg-opacity-40 transition duration-300 flex items-center">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Back to Dashboard
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="bg-gray-800 rounded-lg shadow-xl overflow-hidden mb-8">
+    <!-- Prediction Result Section -->
+    {% if result %}
+    <div class="{% if result == 'High Risk' %}bg-gradient-to-r from-red-600 to-red-800{% else %}bg-gradient-to-r from-green-600 to-green-800{% endif %} p-6 text-white">
+      <div class="flex items-center mb-4">
+        {% if result == 'High Risk' %}
+          <svg class="w-12 h-12 mr-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+          </svg>
+        {% else %}
+          <svg class="w-12 h-12 mr-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        {% endif %}
+        <div>
+          <h2 class="text-2xl font-bold">Prediction Result</h2>
+          <div class="flex items-center mt-2">
+            <div class="text-xl font-semibold mr-4">Risk Level: <span class="font-bold">{{ result }}</span></div>
+            <div class="text-xl font-semibold">Probability: <span class="font-bold">{{ probability }}%</span></div>
+          </div>
+        </div>
+      </div>
+      
+      {% if result == 'High Risk' %}
+      <div class="bg-black bg-opacity-30 rounded-lg p-4 mt-2">
+        <div class="flex items-center">
+          <svg class="w-6 h-6 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <p class="text-lg">Please consult with a healthcare professional for a thorough evaluation.</p>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+    
+    <!-- Messages -->
+    {% if messages %}
+      <div class="p-4 bg-gray-900">
+        {% for message in messages %}
+          <div class="p-4 rounded-lg {% if message.tags == 'success' %}bg-green-900 text-green-200{% elif message.tags == 'error' %}bg-red-900 text-red-200{% else %}bg-blue-900 text-blue-200{% endif %}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+    
+    <!-- Form Section -->
+    <div class="p-6 bg-gray-800 text-gray-100">
+      <form method="post" class="needs-validation space-y-6" novalidate>
+        {% csrf_token %}
+      
+        <!-- Form Card -->
+        <div class="bg-gray-900 rounded-lg p-6">
+          <h3 class="text-xl font-bold mb-4 text-white">Enter Patient Data</h3>
+        
+          <!-- Basic Information -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label for="id_age" class="block text-sm font-medium text-gray-300 mb-1">Age</label>
+              {{ form.age|cut:"class=\"form-control\""|safe }}
+              <div class="invalid-feedback hidden text-red-500 text-sm mt-1">Please enter a valid age between 1 and 120.</div>
+            </div>
+  
+            <div>
+              <label for="id_sex" class="block text-sm font-medium text-gray-300 mb-1">Sex</label>
+              {{ form.sex|cut:"class=\"form-control\""|safe }}
+              <div class="invalid-feedback hidden text-red-500 text-sm mt-1">Please select your sex.</div>
+            </div>
+          </div>
+  
+          <!-- Chest Pain Type -->
+          <div class="mb-6">
+            <label for="id_cp" class="block text-sm font-medium text-gray-300 mb-1">Chest Pain Type</label>
+            {{ form.cp|cut:"class=\"form-control\""|safe }}
+            <div class="invalid-feedback hidden text-red-500 text-sm mt-1">Please select chest pain type.</div>
+          </div>
+  
+          <!-- Vital Signs -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label for="id_trestbps" class="block text-sm font-medium text-gray-300 mb-1">Resting Blood Pressure (mm Hg)</label>
+              {{ form.trestbps|cut:"class=\"form-control\""|safe }}
+              <div class="invalid-feedback hidden text-red-500 text-sm mt-1">Please enter a valid blood pressure.</div>
+            </div>
+  
+            <div>
+              <label for="id_chol" class="block text-sm font-medium text-gray-300 mb-1">Serum Cholesterol (mg/dl)</label>
+              {{ form.chol|cut:"class=\"form-control\""|safe }}
+              <div class="invalid-feedback hidden text-red-500 text-sm mt-1">Please enter a valid cholesterol level.</div>
+            </div>
+          </div>
+  
+          <!-- Blood Sugar and ECG -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label for="id_fbs" class="block text-sm font-medium text-gray-300 mb-1">Fasting Blood Sugar > 120 mg/dl</label>
+              {{ form.fbs|cut:"class=\"form-control\""|safe }}
+              <div class="invalid-feedback hidden text-red-500 text-sm mt-1">Please select an option.</div>
+            </div>
+  
+            <div>
+              <label for="id_restecg" class="block text-sm font-medium text-gray-300 mb-1">Resting ECG Results</label>
+              {{ form.restecg|cut:"class=\"form-control\""|safe }}
+              <div class="invalid-feedback hidden text-red-500 text-sm mt-1">Please select an option.</div>
+            </div>
+          </div>
+  
+          <!-- Exercise Test Results -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label for="id_thalach" class="block text-sm font-medium text-gray-300 mb-1">Maximum Heart Rate Achieved</label>
+              {{ form.thalach|cut:"class=\"form-control\""|safe }}
+              <div class="invalid-feedback hidden text-red-500 text-sm mt-1">Please enter a valid heart rate.</div>
+            </div>
+  
+            <div>
+              <label for="id_exang" class="block text-sm font-medium text-gray-300 mb-1">Exercise Induced Angina</label>
+              {{ form.exang|cut:"class=\"form-control\""|safe }}
+              <div class="invalid-feedback hidden text-red-500 text-sm mt-1">Please select an option.</div>
+            </div>
+          </div>
+  
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label for="id_oldpeak" class="block text-sm font-medium text-gray-300 mb-1">ST Depression Induced by Exercise</label>
+              {{ form.oldpeak|cut:"class=\"form-control\""|safe }}
+              <div class="invalid-feedback hidden text-red-500 text-sm mt-1">Please enter a valid value.</div>
+            </div>
+  
+            <div>
+              <label for="id_slope" class="block text-sm font-medium text-gray-300 mb-1">Slope of Peak Exercise ST Segment</label>
+              {{ form.slope|cut:"class=\"form-control\""|safe }}
+              <div class="invalid-feedback hidden text-red-500 text-sm mt-1">Please select an option.</div>
+            </div>
+          </div>
+  
+          <!-- Additional Information -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div>
+              <label for="id_ca" class="block text-sm font-medium text-gray-300 mb-1">Number of Major Vessels</label>
+              {{ form.ca|cut:"class=\"form-control\""|safe }}
+              <div class="invalid-feedback hidden text-red-500 text-sm mt-1">Please select an option.</div>
+            </div>
+  
+            <div>
+              <label for="id_thal" class="block text-sm font-medium text-gray-300 mb-1">Thalassemia</label>
+              {{ form.thal|cut:"class=\"form-control\""|safe }}
+              <div class="invalid-feedback hidden text-red-500 text-sm mt-1">Please select an option.</div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="flex justify-center">
+          <button type="submit" class="px-8 py-3 bg-gradient-to-r from-red-600 to-purple-600 text-white font-bold rounded-lg shadow hover:from-red-700 hover:to-purple-700 transition duration-300 flex items-center">
+            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+            </svg>
+            Get Prediction
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  {% if prediction_saved %}
+  <div class="bg-gray-800 rounded-lg shadow-xl overflow-hidden">
+    <div class="bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-3">
+      <h2 class="text-xl font-bold text-white flex items-center">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        What Next?
+      </h2>
+    </div>
+    <div class="p-6 text-white">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-black bg-opacity-30 rounded-lg p-4 transform transition-transform hover:scale-105">
+          <div class="flex items-center mb-3">
+            <svg class="w-10 h-10 text-blue-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            <h3 class="text-lg font-semibold">Book Consultation</h3>
+          </div>
+          <p class="mb-4">Schedule an appointment with a cardiologist to discuss your results.</p>
+          <a href="{% url 'myapp:doctor_dashboard' %}" class="inline-block px-4 py-2 bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-300">Schedule Now</a>
+        </div>
+        
+        <div class="bg-black bg-opacity-30 rounded-lg p-4 transform transition-transform hover:scale-105">
+          <div class="flex items-center mb-3">
+            <svg class="w-10 h-10 text-purple-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+            </svg>
+            <h3 class="text-lg font-semibold">View History</h3>
+          </div>
+          <p class="mb-4">Access your prediction history to track changes in your heart health over time.</p>
+          <a href="{% url 'myapp:patient_dashboard' %}" class="inline-block px-4 py-2 bg-purple-600 rounded-lg hover:bg-purple-700 transition duration-300">View Dashboard</a>
+        </div>
+        
+        <div class="bg-black bg-opacity-30 rounded-lg p-4 transform transition-transform hover:scale-105">
+          <div class="flex items-center mb-3">
+            <svg class="w-10 h-10 text-red-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+            </svg>
+            <h3 class="text-lg font-semibold">Heart Health</h3>
+          </div>
+          <p class="mb-4">Learn more about heart disease prevention and maintaining a healthy lifestyle.</p>
+          <a href="#" class="inline-block px-4 py-2 bg-red-600 rounded-lg hover:bg-red-700 transition duration-300">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+<style>
+  input[type="number"],
+  input[type="text"],
+  select {
+    background-color: #1f2937;
+    color: white;
+    border: 1px solid #4b5563;
+    border-radius: 0.375rem;
+    padding: 0.625rem;
+    width: 100%;
+  }
+  
+  input[type="number"]:focus,
+  input[type="text"]:focus,
+  select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+  }
+  
+  ::placeholder {
+    color: #9ca3af;
+  }
+  
+  .invalid-feedback.hidden {
+    display: none;
+  }
+  
+  .was-validated input:invalid,
+  .was-validated select:invalid {
+    border-color: #ef4444;
+  }
+  
+  .was-validated input:invalid + .invalid-feedback,
+  .was-validated select:invalid + .invalid-feedback {
+    display: block;
+  }
+</style>
+
+<script>
+  // Form validation
+  (function () {
+    "use strict";
+    var forms = document.querySelectorAll(".needs-validation");
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener(
+        "submit",
+        function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
+</script>
+{% endblock %}

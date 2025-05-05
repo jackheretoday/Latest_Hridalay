@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Health Food Recommendation</title>
+    <style>
+        body {
+            background-color: black;
+            color: lemonchiffon;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #ffcc00;
+            font-size: 28px;
+        }
+
+        select, button {
+            padding: 12px;
+            font-size: 18px;
+            border-radius: 20px;
+            border: none;
+            outline: none;
+            margin-top: 10px;
+            width: 300px;
+            display: block;
+            margin: 10px auto;
+            text-align: center;
+        }
+
+        select {
+            background-color: #333;
+            color: lemonchiffon;
+        }
+
+        button {
+            background-color: #ffcc00;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #ffdb4d;
+        }
+
+        #recommendation {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #b8c3c4;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: #222;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <h1> A.I-Based Heart Health Food Recommendation</h1>
+
+    <label for="disease">Select Heart Condition:</label>
+    <select id="disease">
+        <option value="">-- Select Condition --</option>
+        <option value="High Blood Pressure">High Blood Pressure</option>
+        <option value="Coronary Artery Disease">Coronary Artery Disease</option>
+        <option value="Heart Failure">Heart Failure</option>
+        <option value="Arrhythmia">Arrhythmia</option>
+        <option value="Cholesterol Issues">High Cholesterol</option>
+    </select>
+
+    <button onclick="getRecommendation()">Get Food Recommendation</button>
+
+    <p id="recommendation">Your recommended food will appear here.</p>
+
+    <script>
+        async function getRecommendation() {
+            let disease = document.getElementById("disease").value;
+            let recommendationElement = document.getElementById("recommendation");
+
+            if (!disease) {
+                recommendationElement.innerText = "❌ Please select a heart condition.";
+                return;
+            }
+
+            recommendationElement.innerText = "⏳ Fetching AI recommendation...";
+
+            const apiKey = "1UvN3ISWXzw7YYoezamseLX6XNwilZskJHmTCLBS";  // Replace with your Cohere API key
+
+            let prompt = `Suggest the best food for a person with ${disease}. Provide healthy, heart-friendly meal recommendations.`;
+
+            try {
+                let response = await fetch("https://api.cohere.ai/v1/generate", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${apiKey}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        model: "command",
+                        prompt: prompt,
+                        max_tokens: 100
+                    })
+                });
+
+                let data = await response.json();
+                let recommendation = data.generations[0].text || "No response from AI.";
+
+                recommendationElement.innerText = "✅ " + recommendation;
+            } catch (error) {
+                recommendationElement.innerText = "❌ Error fetching recommendation. Try again.";
+                console.error("API Error:", error);
+            }
+        }
+    </script>
+
+</body>
+</html>
+

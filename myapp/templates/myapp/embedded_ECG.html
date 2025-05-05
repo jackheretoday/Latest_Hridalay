@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live ECG Graph | Heartbeat Theme</title>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Background Gradient */
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #c8cf0f, #0f84b2);
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Graph Container with Heartbeat */
+        .graph-container {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            padding: 20px;
+            min-width: 320px; /* Slightly wider than iframe */
+            min-height: 220px; /* Enough height to wrap title + iframe */
+            animation: heartbeat 1.5s infinite ease-in-out;
+
+            /* Flexbox Layout */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px; /* Space between title and iframe */
+        }
+
+        /* Title */
+        h2 {
+            color: #d62020;
+            font-weight: 600;
+            font-size: 16px;
+            margin: 0; /* Remove extra margins */
+        }
+
+        /* iFrame Styling */
+        iframe {
+            border: 2px solid #d62020;
+            border-radius: 8px;
+            width: 425px;
+            height: 250px;
+            display: block;
+        }
+
+        /* Heartbeat Animation */
+        @keyframes heartbeat {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            }
+            25% {
+                transform: scale(1.02);
+                box-shadow: 0 12px 20px rgba(0,0,0,0.3);
+            }
+            50% {
+                transform: scale(0.98);
+                box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            }
+            75% {
+                transform: scale(1.03);
+                box-shadow: 0 14px 24px rgba(0,0,0,0.35);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="graph-container">
+        <h2>Live ECG Graph 🫀</h2>
+
+        <!-- ThingSpeak Embedded Graph -->
+        <iframe 
+            src="https://thingspeak.mathworks.com/channels/2852018/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&xaxis=Time%28s%29&yaxis=Voltage%28mV%29">
+        </iframe>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,7 @@
+Django based Web-Application.
+{% url 'patient_list' %}
+{% url 'doctor_list' %}
+{% url 'prediction_results' %}
+{% url 'video_call' %}
+{% url 'recommendations' %}
+{% url 'embed_ECG' %}

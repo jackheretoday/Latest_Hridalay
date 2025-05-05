@@ -1,0 +1,226 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+
+{% block title %}हृदय-lay - Heart Health Platform{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <div class="container mx-auto px-4 py-16">
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-bold mb-4 bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 text-transparent bg-clip-text">
+                Welcome to हृदय-lay
+            </h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                Your comprehensive heart health platform, connecting patients with specialized cardiologists
+            </p>
+        </div>
+
+        <!-- 3D Heart Model Section -->
+        <div class="max-w-6xl mx-auto mb-16">
+            <div class="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                    <!-- 3D Model Section -->
+                    <div class="p-8 flex justify-center items-center bg-gray-800">
+                        <iframe id="sketchfab-iframe"
+                            title="Realistic Human Heart"
+                            frameborder="0"
+                            allowfullscreen
+                            mozallowfullscreen="true"
+                            webkitallowfullscreen="true"
+                            allow="autoplay; fullscreen; xr-spatial-tracking"
+                            src="https://sketchfab.com/models/3f8072336ce94d18b3d0d055a1ece089/embed?ui_theme=dark&preload=1&transparent=1&autostart=1&autospin=1"
+                            class="w-full h-96 rounded-lg shadow-lg">
+                        </iframe>
+                    </div>
+
+                    <!-- Text Content Section -->
+                    <div class="p-8 flex flex-col justify-center">
+                        <h2 class="text-3xl font-bold text-white mb-4">Explore Your Heart</h2>
+                        <p class="text-gray-300 mb-6">
+                            Discover the intricate workings of the human heart through our interactive 3D model. 
+                            Learn about cardiovascular health, identify warning signs, and understand how to maintain 
+                            a healthy heart.
+                        </p>
+                        <div class="space-y-4">
+                            <button id="play-model" 
+                                class="w-full px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300 transform hover:scale-105">
+                                <span class="flex items-center justify-center">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Play Animation
+                                </span>
+                            </button>
+                            <button id="learn-more" 
+                                class="w-full px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition duration-300 transform hover:scale-105">
+                                Learn About Heart Health
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Role Selection Cards -->
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">Choose Your Role</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Patient Card -->
+                <div class="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden card-hover">
+                    <div class="p-8">
+                        <div class="text-center mb-6">
+                            <div class="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto mb-4 pulse">
+                                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white">Patient</h3>
+                        </div>
+                        <p class="text-gray-300 mb-6 text-center">
+                            Access personalized heart health monitoring, connect with specialists, and manage your cardiovascular care.
+                        </p>
+                        <div class="flex justify-center space-x-4">
+                            <a href="{% url 'myapp:patient_signup' %}" 
+                                class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105">
+                                Sign Up
+                            </a>
+                            <a href="{% url 'myapp:patientlogin' %}" 
+                                class="px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition duration-300 transform hover:scale-105">
+                                Login
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Doctor Card -->
+                <div class="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden card-hover">
+                    <div class="p-8">
+                        <div class="text-center mb-6">
+                            <div class="w-20 h-20 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 pulse">
+                                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                </svg>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white">Doctor</h3>
+                        </div>
+                        <p class="text-gray-300 mb-6 text-center">
+                            Provide specialized care, monitor patients remotely, and access advanced diagnostic tools.
+                        </p>
+                        <div class="flex justify-center space-x-4">
+                            <a href="{% url 'myapp:doctor_signup' %}" 
+                                class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 transform hover:scale-105">
+                                Sign Up
+                            </a>
+                            <a href="{% url 'myapp:doctorlogin' %}" 
+                                class="px-6 py-3 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition duration-300 transform hover:scale-105">
+                                Login
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accreditation Section -->
+    <div class="container mx-auto px-4 py-10 text-center">
+        <h3 class="text-2xl font-bold mb-4 text-white">Our Accreditations</h3>
+        <div class="flex flex-wrap justify-center gap-6">
+            <div class="bg-white p-4 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
+                <img src="https://3.imimg.com/data3/DX/UX/MY-9738372/nabh-accreditation-service-250x250.jpg" 
+                     alt="NABH Accreditation" 
+                     class="h-16 w-auto">
+                <p class="mt-2 text-gray-800 font-semibold">NABH Accredited</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
+                <img src="https://1000logos.net/wp-content/uploads/2020/02/American-Heart-Association-Logo.png" 
+                     alt="AHA Accreditation" 
+                     class="h-16 w-auto">
+                <p class="mt-2 text-gray-800 font-semibold">AHA Certified</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
+                <img src="https://technoroll.org/wp-content/uploads/2021/09/ISO-9001-Certification.png" 
+                     alt="ISO Certification" 
+                     class="h-16 w-auto">
+                <p class="mt-2 text-gray-800 font-semibold">ISO 9001 Certified</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-red-700 via-purple-600 to-blue-500 text-white p-8">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">हृदय-lay</h3>
+                    <p class="text-gray-200">Your trusted partner in heart health management and care.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="{% url 'myapp:about' %}" class="hover:text-gray-300">About Us</a></li>
+                        <li><a href="{% url 'myapp:contact' %}" class="hover:text-gray-300">Contact</a></li>
+                        <li><a href="#" class="hover:text-gray-300">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Contact</h3>
+                    <p class="text-gray-200">Email: info@hridaylay.com</p>
+                    <p class="text-gray-200">Phone: +91 1234567890</p>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-gray-700 text-center">
+                <p>&copy; 2025 हृदय-lay. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        // Add interactivity to the 3D model
+        document.getElementById('play-model').addEventListener('click', function() {
+            const iframe = document.getElementById('sketchfab-iframe');
+            const newSrc = iframe.src.replace('autospin=0', 'autospin=1');
+            iframe.src = newSrc;
+            
+            // Add visual feedback
+            this.classList.add('bg-red-700');
+            setTimeout(() => {
+                this.classList.remove('bg-red-700');
+            }, 300);
+        });
+
+        // Add redirection for Learn About Heart Health button
+        document.getElementById('learn-more').addEventListener('click', function() {
+            window.open('https://www.heart.org/en/health-topics/consumer-healthcare/what-is-cardiovascular-disease', '_blank');
+            
+            this.classList.add('bg-purple-700');
+            setTimeout(() => {
+                this.classList.remove('bg-purple-700');
+            }, 300);
+        });
+
+        // Add hover effects to cards
+        document.querySelectorAll('.card-hover').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px)';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Add loading state to buttons
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.add('opacity-75');
+                setTimeout(() => {
+                    this.classList.remove('opacity-75');
+                }, 300);
+            });
+        });
+    </script>
+{% endblock %} 

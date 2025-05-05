@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recommendation Dashboard - हृदय-lay</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap');
+
+    body {
+      font-family: 'Lora', serif;
+      background-color: black;
+      color: white;
+    }
+
+    .card {
+      background-color: black;
+      color: white;
+      border: 1px solid white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="bg-gradient-to-r from-red-600 via-purple-500 to-blue-600 p-4 text-white">
+    <div class="container mx-auto flex justify-between items-center">
+      <a href="{% url 'myapp:home' %}" class="text-2xl font-bold hover:text-gray-300">हृदय-lay</a>
+      <div>
+        <a href="{% url 'myapp:home' %}" class="mx-2 hover:text-gray-300">Home</a>
+        <a href="{% url 'myapp:about' %}" class="mx-2 hover:text-gray-300">About</a>
+        <a href="{% url 'myapp:contact' %}" class="mx-2 hover:text-gray-300">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Recommendation Dashboard -->
+  <div class="container mx-auto px-4 py-16">
+    <h2 class="text-3xl font-bold text-white mb-8 text-center">Personalized Health Recommendations</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Find Cardiologist Near Me -->
+      <div class="card">
+        <h3 class="text-xl font-bold text-white mb-4">Find Cardiologist Near Me</h3>
+        <p>Locate the nearest cardiologist for expert consultation.</p>
+        <a href="{% url 'myapp:location_recommendation' %}" class="btn bg-blue-600 text-white hover:bg-blue-700">Find Now</a>
+      </div>
+
+      <!-- AI-Based Food Recommendation -->
+      <div class="card">
+        <h3 class="text-xl font-bold text-white mb-4">AI-Based Food Recommendation</h3>
+        <p>Get AI-powered personalized diet recommendations for better heart health.</p>
+        <a href="{% url 'myapp:food_recommendation' %}" class="btn bg-green-600 text-white hover:bg-green-700">Get Food Plan</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gradient-to-r from-red-700 via-purple-600 to-blue-500 text-white p-4 text-center">
+    <p>&copy; 2025 हृदय-lay. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
+
