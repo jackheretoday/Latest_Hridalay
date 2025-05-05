@@ -1,4 +1,6 @@
-{% extends 'myapp/base.html' %} {% load static %} {% block content %}
+{% extends 'myapp/base.html' %}
+{% load static %}
+{% block content %}
 
 <div class="container mx-auto px-4 py-8">
     <!-- Header -->
@@ -51,6 +53,7 @@
     </div>
 </div>
 
+<script src="https://meet.jit.si/external_api.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var domain = "meet.jit.si";
@@ -84,4 +87,5 @@
         });
     });
 </script>
+
 {% endblock %}
