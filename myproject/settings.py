@@ -12,7 +12,7 @@ SECRET_KEY = env("SECRET_KEY", default="django-insecure-d73$hs#=p7)qs!oe8i6vays=
 
 DEBUG = env.bool("DEBUG", default=True)
 
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["127.0.0.1", "localhost"])
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=['hridalay-health.onrender.com',"127.0.0.1", "localhost"])
 
 INSTALLED_APPS = [
     "django.contrib.admin",
