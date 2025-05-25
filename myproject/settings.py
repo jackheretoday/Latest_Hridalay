@@ -87,5 +87,12 @@ AUTH_USER_MODEL = "myapp.CustomUser"
 
 # Authentication Settings
 LOGIN_URL = "patientlogin"
+
 LOGIN_REDIRECT_URL = "patient_dashboard"
+
 LOGOUT_REDIRECT_URL = "home"
+
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+# Use WhiteNoise for production static files
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
