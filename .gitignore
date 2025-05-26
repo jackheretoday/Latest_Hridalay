@@ -39,5 +39,5 @@ db.sqlite3-journal
 media/
 
 # Project specific
-ml_model/models/*.pkl
+#ml_model/models/*.pkl
 .env
